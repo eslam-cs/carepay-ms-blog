@@ -1,7 +1,7 @@
 cxf:
  jaxrs:
   component-scan: true
-  classes-scan-packages: com.gateway.gatewaydemo
+  classes-scan-packages: com.carepay.blog
   
 spring:
  h2:
