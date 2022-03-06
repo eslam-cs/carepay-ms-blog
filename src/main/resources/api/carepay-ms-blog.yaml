@@ -1,0 +1,357 @@
+swagger: '2.0'
+info:
+  description: 'carepay-ms-blog'
+
+  version: '1.0'
+
+  title: 'carepay-ms-blog'
+  contact:
+    email: 'business.eslam@gmail.com'
+host: 'localhost:8080'
+basePath: '/services'
+schemes:
+- 'http'
+paths:
+  /posts/:
+    post:
+      tags:
+      - 'posts'
+      summary: 'add post'
+      description: ''
+      operationId: 'addOrUpdatePost'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      parameters:
+      - in: 'body'
+        name: 'post'
+        description: 'post object that needs to be added'
+        required: true
+        schema:
+          $ref: '#/definitions/Post'
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/GenericResponse'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    get:
+      tags:
+      - 'posts'
+      summary: 'get all posts'
+      description: 'get all posts'
+      operationId: 'getAllPosts'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'page'
+          type: 'integer'
+          description: 'Page number'
+        - in: 'query'
+          name: 'pageSize'
+          type: 'integer'
+          description: 'total number of items per page'
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/PostTitle'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'  
+  /posts/{uuid}:
+    get:
+      tags:
+      - 'posts'
+      summary: 'get post'
+      description: 'get post'
+      operationId: 'getPostByUuid'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: path
+          name: uuid
+          description: post uuid
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/Post'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'  
+            
+    delete:
+      tags:
+      - 'posts'
+      summary: 'delete post'
+      description: 'delete post'
+      operationId: 'deletePostByUuid'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: path
+          name: uuid
+          description: post uuid
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/GenericResponse'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'  
+            
+  /posts/{uuid}/comments:
+    post:
+      tags:
+      - 'posts'
+      summary: 'add comment'
+      description: ''
+      operationId: 'addComment'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      parameters:
+      - in: 'body'
+        name: 'Comment'
+        description: 'comment object that needs to be added'
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      - in: path
+        name: uuid
+        description: post uuid
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/GenericResponse'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    get:
+      tags:
+      - 'posts'
+      summary: 'get all comments'
+      description: 'get all comments'
+      operationId: 'getAllComments'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'page'
+          type: 'integer'
+          description: 'Page number'
+        - in: 'query'
+          name: 'pageSize'
+          type: 'integer'
+          description: 'total number of items per page'
+        - in: path
+          name: uuid
+          description: post uuid
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/CommentContent'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'            
+  /posts/{uuid}/comments/{commentUuid}:
+    get:
+      tags:
+      - 'posts'
+      summary: 'get comment'
+      description: 'get comment'
+      operationId: 'getCommentByUuid'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: path
+          name: uuid
+          description: post uuid
+          required: true
+          type: "string"
+          
+        - in: path
+          name: commentUuid
+          description: comment uuid
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/Comment'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'  
+            
+    delete:
+      tags:
+      - 'posts'
+      summary: 'delete comment'
+      description: 'delete comment'
+      operationId: 'deleteCommentByUuid'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: path
+          name: uuid
+          description: post uuid
+          required: true
+          type: "string"
+          
+        - in: path
+          name: commentUuid
+          description: comment uuid
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/GenericResponse'
+        400:
+          description: 'Invalid input'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: 'Internal Server Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'  
+            
+            
+definitions:
+
+  GenericResponse:
+    type: 'object'
+    properties:
+      status:
+        properties:
+          statusCategory:
+            type: 'string'
+            enum:
+            - 'ok'
+            - 'error'
+            - 'warning'
+          statusCode:
+            type: 'string'
+          statusMessage:
+            type: 'string'
+          additionalInfo:
+            type: 'string'
+  ErrorResponse:
+    allOf:
+      - $ref: '#/definitions/GenericResponse'
+      - type: 'object'
+
+ 
+  Post:
+    type: 'object'
+    properties:
+      uuid:
+        type: string
+        format: uuid
+        description: 'unique identifier for posts'
+      title:
+        type: 'string'
+        example: 'post title'
+      content:
+        type: 'string'
+        example: 'post content'
+      postDate:
+        type: 'string'
+        format: 'date-time'
+  
+  PostTitle:
+    type: 'object'
+    properties:
+      uuid:
+        type: string
+        format: uuid
+        description: 'unique identifier for posts'
+      title:
+        type: 'string'
+        example: 'post title'
+        
+  Comment:
+    type: 'object'
+    properties:
+      uuid:
+        type: string
+        format: uuid
+        description: 'unique identifier for posts'
+      content:
+        type: 'string'
+        example: 'post title'
+      commentDate:
+        type: 'string'
+        format: 'date-time'
+      
+  CommentContent:
+    type: 'object'
+    properties:
+      uuid:
+        type: string
+        format: uuid
+        description: 'unique identifier for posts'
+      content:
+        type: 'string'
+        example: 'post title'
+     
+
+  

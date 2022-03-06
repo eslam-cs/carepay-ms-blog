@@ -1,0 +1,10 @@
+BlogApplication
+The application is API First so swagger has been created then the code driven from it 
+For the app to work u need to run Maven Clean Install to generate needed classes
+Also need Junit 5 in the build path to run the test
+The application runs on java 11
+U can run the app by running BlogApplication.java
+The exception handle should be better, but I did not have time
+Also, I could do more unit test specially on data layer
+the carepay-ms-blog.yaml in src\main\resources\api u need it to test for example add it in soapui will create the request u can also view it better by cope the content in https://editor.swagger.io/
+

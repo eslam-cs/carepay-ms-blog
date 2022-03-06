@@ -1,0 +1,11 @@
+cxf:
+ jaxrs:
+  component-scan: true
+  classes-scan-packages: com.gateway.gatewaydemo
+  
+spring:
+ h2:
+  console:
+   enabled: true
+
+
